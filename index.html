@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Rasgos de Fantasmas - Phasmophobia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            font-family: 'Orbitron', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .title {
+            font-family: 'Creepster', cursive;
+            font-size: 3.5rem;
+            color: #00ffff;
+            text-shadow: 
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 60px #00ffff;
+            margin-bottom: 20px;
+            animation: flicker 3s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .filter-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .filter-title {
+            font-size: 2rem;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .filter-item:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            transform: translateY(-2px);
+        }
+        
+        .filter-item.active {
+            background: rgba(0, 255, 255, 0.3);
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        
+        .filter-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ffff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-checkbox.checked {
+            background: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        
+        .filter-checkbox.checked::after {
+            content: '✓';
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: 2px solid;
+            border-radius: 10px;
+            background: transparent;
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        
+        .btn-clear {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+        
+        .btn-clear:hover {
+            background: #ff6b6b;
+            color: #000;
+            box-shadow: 0 0 20px #ff6b6b;
+        }
+        
+        .results-counter {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .ghost-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .ghost-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .ghost-card.hidden {
+            display: none;
+        }
+        
+        .ghost-card.match {
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+        
+        .ghost-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .ghost-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        
+        .ghost-card:hover::before {
+            left: 100%;
+        }
+        
+        .ghost-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .ghost-description {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .evidence-section {
+            border-top: 1px solid #333;
+            padding-top: 15px;
+        }
+        
+        .evidence-title {
+            font-size: 1.1rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px #00ffff;
+        }
+        
+        .evidence-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .evidence-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .evidence-item.highlighted {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .evidence-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+        }
+        
+        .equipment-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            border: 2px solid #444;
+            text-align: center;
+        }
+        
+        .equipment-title {
+            font-size: 2rem;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        
+        .equipment-text {
+            color: #cccccc;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(0, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 60%; left: 85%; animation-delay: 2s; }
+        .floating-icon:nth-child(3) { top: 40%; left: 5%; animation-delay: 4s; }
+        .floating-icon:nth-child(4) { top: 80%; left: 75%; animation-delay: 1s; }
+        .floating-icon:nth-child(5) { top: 10%; left: 90%; animation-delay: 3s; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .ghost-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-icons">
+        <div class="floating-icon">👻</div>
+        <div class="floating-icon">🔦</div>
+        <div class="floating-icon">📷</div>
+        <div class="floating-icon">🎙️</div>
+        <div class="floating-icon">🌡️</div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Pruebas De Fantasmas</h1>
+            <p class="subtitle">Una explicación de cada rasgo de los Fantasmas</p>
+            <div style="margin-top: 20px; font-size: 1.5rem; color: #ff6b6b; text-shadow: 0 0 15px #ff6b6b; font-weight: bold;">
+                PHASMOPHOBIA DE FORTNITE
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h2 class="filter-title">🔍 Filtrar por Evidencias</h2>
+            <div class="filter-grid">
+                <div class="filter-item" data-evidence="Spirit Box">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">📻</span>
+                    <span>Spirit Box</span>
+                </div>
+                <div class="filter-item" data-evidence="Ghost Writing">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">👻</span>
+                    <span>Ghost Writing</span>
+                </div>
+                <div class="filter-item" data-evidence="EMF Sensor">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">📱</span>
+                    <span>EMF Sensor</span>
+                </div>
+                <div class="filter-item" data-evidence="Cold Spots">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">🌡️</span>
+                    <span>Cold Spots</span>
+                </div>
+                <div class="filter-item" data-evidence="Ghost Orbs">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">🔮</span>
+                    <span>Ghost Orbs</span>
+                </div>
+                <div class="filter-item" data-evidence="Playful">
+                    <div class="filter-checkbox"></div>
+                    <span class="evidence-icon">🎭</span>
+                    <span>Playful</span>
+                </div>
+            </div>
+            <div class="filter-controls">
+                <button class="btn btn-clear" onclick="clearFilters()">Limpiar Filtros</button>
+            </div>
+        </div>
+        
+        <div class="results-counter" id="resultsCounter">
+            Mostrando todos los fantasmas (14)
+        </div>
+        
+        <div class="ghost-grid" id="ghostGrid">
+            <div class="ghost-card" data-evidences="Spirit Box,Ghost Writing,EMF Sensor">
+                <h2 class="ghost-name">Poltergeist</h2>
+                <p class="ghost-description">Un Fantasma bastante activo y físico. Sin embargo, ver este Fantasma en la Rejilla o escuchar su voz es bastante raro.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,EMF Sensor,Ghost Writing">
+                <h2 class="ghost-name">Wailing Soul</h2>
+                <p class="ghost-description">Conocida por molestar a sus víctimas con susurros y voces, pero significativamente más lenta que los Fantasmas promedio.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Ghost Writing,Spirit Box">
+                <h2 class="ghost-name">Demon</h2>
+                <p class="ghost-description">Uno de los Fantasmas más peligrosos, muy activo y violento, a menudo vocal hacia sus víctimas.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Ghost Orbs,Playful">
+                <h2 class="ghost-name">Yurei</h2>
+                <p class="ghost-description">Conocido por ser muy pasivo y silencioso.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Playful,EMF Sensor,Ghost Orbs">
+                <h2 class="ghost-name">Duppy</h2>
+                <p class="ghost-description">Muy similar a los Yurei. Los Duppy están bastante relajados, sin embargo son más comunes de ver en la Rejilla y más vocales también.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Spirit Box,Ghost Writing,Ghost Orbs">
+                <h2 class="ghost-name">Vetala</h2>
+                <p class="ghost-description">Los Vetala son conocidos por sus velocidades excesivamente rápidas cuando cazan a su presa, también pueden volverse muy ruidosos.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Playful,Ghost Writing">
+                <h2 class="ghost-name">Shy</h2>
+                <p class="ghost-description">El tipo más pasivo de Fantasma que conocemos, muy lento y silencioso. Los Fantasmas Shy nunca se ven en la Rejilla.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Spirit Box,Playful,EMF Sensor">
+                <h2 class="ghost-name">Spirit</h2>
+                <p class="ghost-description">Estos Fantasmas son tu Fantasma promedio, no demasiado pasivos, pero tampoco demasiado agresivos.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Playful,EMF Sensor">
+                <h2 class="ghost-name">Basty</h2>
+                <p class="ghost-description">Los Basty son conocidos por ser vistos en la Rejilla más comúnmente que otros Fantasmas.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Ghost Writing,Ghost Orbs">
+                <h2 class="ghost-name">Gelin</h2>
+                <p class="ghost-description">Aunque los Gelin pueden volverse activos a veces, son especialmente conocidos por no causar daño físico a sus víctimas.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Playful,Ghost Writing,Ghost Orbs">
+                <h2 class="ghost-name">Dybbuk</h2>
+                <p class="ghost-description">El tipo más fuerte de Fantasmas justo después de los Demon, con niveles de ira incrementados y voces comúnmente escuchadas.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Writing">
+                            <span class="evidence-icon">👻</span>
+                            <span>Ghost Writing</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Spirit Box,Cold Spots,Ghost Orbs">
+                <h2 class="ghost-name">Moroi</h2>
+                <p class="ghost-description">Similar a los Spirit, los Moroi parecen ser promedio, sin embargo, se ven en la Rejilla más comúnmente que otros.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Cold Spots,Playful,Ghost Orbs">
+                <h2 class="ghost-name">Shade</h2>
+                <p class="ghost-description">Los Shade tienden a ser muy pasivos contra sus víctimas, a menudo manteniéndose callados y nunca vistos en la Rejilla.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Playful">
+                            <span class="evidence-icon">🎭</span>
+                            <span>Playful</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Ghost Orbs">
+                            <span class="evidence-icon">🔮</span>
+                            <span>Ghost Orbs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ghost-card" data-evidences="Spirit Box,Cold Spots,EMF Sensor">
+                <h2 class="ghost-name">Jumbee</h2>
+                <p class="ghost-description">Estos Fantasmas tienden a estar más del lado relajado, con niveles de ira menores al promedio.</p>
+                <div class="evidence-section">
+                    <h3 class="evidence-title">Evidencias:</h3>
+                    <div class="evidence-list">
+                        <div class="evidence-item" data-evidence="Spirit Box">
+                            <span class="evidence-icon">📻</span>
+                            <span>Spirit Box</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="Cold Spots">
+                            <span class="evidence-icon">🌡️</span>
+                            <span>Cold Spots</span>
+                        </div>
+                        <div class="evidence-item" data-evidence="EMF Sensor">
+                            <span class="evidence-icon">📱</span>
+                            <span>EMF Sensor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="equipment-section">
+            <h2 class="equipment-title">Creado Por</h2>
+            <p class="equipment-text">OutDEATHGHOST - DG3408</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedEvidences = [];
+        
+        // Inicializar eventos
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeFilters();
+        });
+        
+        function initializeFilters() {
+            const filterItems = document.querySelectorAll('.filter-item');
+            
+            filterItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const evidence = this.getAttribute('data-evidence');
+                    toggleEvidence(evidence, this);
+                });
+            });
+        }
+        
+        function toggleEvidence(evidence, element) {
+            const checkbox = element.querySelector('.filter-checkbox');
+            
+            if (selectedEvidences.includes(evidence)) {
+                // Remover evidencia
+                selectedEvidences = selectedEvidences.filter(e => e !== evidence);
+                element.classList.remove('active');
+                checkbox.classList.remove('checked');
+            } else {
+                // Agregar evidencia
+                selectedEvidences.push(evidence);
+                element.classList.add('active');
+                checkbox.classList.add('checked');
+            }
+            
+            filterGhosts();
+        }
+        
+        function filterGhosts() {
+            const ghostCards = document.querySelectorAll('.ghost-card');
+            const resultsCounter = document.getElementById('resultsCounter');
+            let visibleCount = 0;
+            
+            ghostCards.forEach(card => {
+                const ghostEvidences = card.getAttribute('data-evidences').split(',');
+                
+                if (selectedEvidences.length === 0) {
+                    // Mostrar todos si no hay filtros activos
+                    card.classList.remove('hidden', 'match');
+                    visibleCount++;
+                } else {
+                    // Verificar si el fantasma tiene todas las evidencias seleccionadas
+                    const hasAllEvidences = selectedEvidences.every(evidence => 
+                        ghostEvidences.includes(evidence)
+                    );
+                    
+                    if (hasAllEvidences) {
+                        card.classList.remove('hidden');
+                        card.classList.add('match');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                        card.classList.remove('match');
+                    }
+                }
+                
+                // Resaltar evidencias coincidentes
+                highlightMatchingEvidences(card);
+            });
+            
+            // Actualizar contador
+            updateResultsCounter(visibleCount);
+        }
+        
+        function highlightMatchingEvidences(card) {
+            const evidenceItems = card.querySelectorAll('.evidence-item');
+            
+            evidenceItems.forEach(item => {
+                const evidenceType = item.getAttribute('data-evidence');
+                
+                if (selectedEvidences.includes(evidenceType)) {
+                    item.classList.add('highlighted');
+                } else {
+                    item.classList.remove('highlighted');
+                }
+            });
+        }
+        
+        function updateResultsCounter(count) {
+            const resultsCounter = document.getElementById('resultsCounter');
+            const totalGhosts = document.querySelectorAll('.ghost-card').length;
+            
+            if (selectedEvidences.length === 0) {
+                resultsCounter.textContent = `Mostrando todos los fantasmas (${totalGhosts})`;
+            } else if (count === 0) {
+                resultsCounter.textContent = `No se encontraron fantasmas con las evidencias seleccionadas`;
+                resultsCounter.style.color = '#ff6b6b';
+            } else {
+                resultsCounter.textContent = `Mostrando ${count} fantasma${count !== 1 ? 's' : ''} de ${totalGhosts}`;
+                resultsCounter.style.color = '#00ff00';
+            }
+        }
+        
+        function clearFilters() {
+            selectedEvidences = [];
+            
+            // Limpiar estados visuales
+            document.querySelectorAll('.filter-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.filter-checkbox').classList.remove('checked');
+            });
+            
+            // Mostrar todos los fantasmas
+            document.querySelectorAll('.ghost-card').forEach(card => {
+                card.classList.remove('hidden', 'match');
+            });
+            
+            // Quitar resaltado de evidencias
+            document.querySelectorAll('.evidence-item').forEach(item => {
+                item.classList.remove('highlighted');
+            });
+            
+            // Actualizar contador
+            const totalGhosts = document.querySelectorAll('.ghost-card').length;
+            document.getElementById('resultsCounter').textContent = `Mostrando todos los fantasmas (${totalGhosts})`;
+            document.getElementById('resultsCounter').style.color = '#00ffff';
+        }
+    </script>
