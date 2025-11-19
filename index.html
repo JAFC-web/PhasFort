@@ -852,5 +852,132 @@
             
             // Validar contraseña
             const password = document.getElementById('reg-password');
-            if (password.value.length
+            if (password.value.length < 8) {
+                showError(password, 'La contraseña debe tener al menos 8 caracteres');
+                isValid = false;
+            }
+            
+            // Validar confirmación de contraseña
+            const passwordConfirm = document.getElementById('reg-password-confirm');
+            if (password.value !== passwordConfirm.value) {
+                showError(passwordConfirm, 'Las contraseñas no coinciden');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Deshabilitar botón y mostrar loading
+                const btn = this.querySelector('.submit-btn');
+                btn.disabled = true;
+                btn.innerHTML = 'Creando cuenta<span class="loading"></span>';
+                
+                // Simular registro
+                setTimeout(() => {
+                    showNotification('¡Cuenta creada exitosamente! Bienvenido a LeapU', 'success');
+                    this.reset();
+                    btn.disabled = false;
+                    btn.textContent = 'Crear Cuenta';
+                    
+                    // Redirigir al login después de 2 segundos
+                    setTimeout(() => {
+                        navigateTo('login');
+                    }, 2000);
+                }, 1500);
+            }
+        });
 
+        // Validación de formulario de login
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            const formGroups = this.querySelectorAll('.form-group');
+            
+            // Limpiar errores previos
+            formGroups.forEach(group => group.classList.remove('error'));
+            
+            // Validar email/usuario
+            const email = document.getElementById('login-email');
+            if (email.value.trim().length < 3) {
+                showError(email, 'Ingresa tu correo o usuario');
+                isValid = false;
+            }
+            
+            // Validar contraseña
+            const password = document.getElementById('login-password');
+            if (password.value.length === 0) {
+                showError(password, 'Ingresa tu contraseña');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Deshabilitar botón y mostrar loading
+                const btn = this.querySelector('.submit-btn');
+                btn.disabled = true;
+                btn.innerHTML = 'Iniciando sesión<span class="loading"></span>';
+                
+                // Simular login
+                setTimeout(() => {
+                    showNotification('¡Inicio de sesión exitoso! Redirigiendo...', 'success');
+                    btn.disabled = false;
+                    btn.textContent = 'Iniciar Sesión';
+                }, 1500);
+            }
+        });
+
+        // Función para mostrar errores en formularios
+        function showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.add('error');
+            const errorElement = formGroup.querySelector('.error-message');
+            errorElement.textContent = message;
+            input.focus();
+        }
+
+        // Función para mostrar notificaciones
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Limpiar errores al escribir
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                const formGroup = this.closest('.form-group');
+                if (formGroup.classList.contains('error')) {
+                    formGroup.classList.remove('error');
+                }
+            });
+        });
+
+        // Navegación con teclas (accesibilidad)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && currentSection !== 'home') {
+                navigateTo('home');
+            }
+        });
+
+        // Manejar navegación del navegador (botones atrás/adelante)
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.section) {
+                currentSection = e.state.section === 'home' ? 'registro' : 'home';
+                navigateTo(e.state.section);
+            }
+        });
+
+        // Cargar sección desde URL al iniciar
+        window.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.slice(1);
+            if (hash === 'registro' || hash === 'login') {
+                navigateTo(hash);
+            }
+        });
+    </script>
+</body>
+</html>
