@@ -4,514 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LeapU - Transforma Tu Futuro</title>
-<style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-:root {
---rosa-salmon: #f36688;
---rosa-fuerte: #da3182;
---magenta-oscuro: #9e316b;
---violeta-claro: #bb3ad3;
---azul-violeta: #684dda;
---azul-intenso: #5033db;
---azul-purpura: #261a5a;
---azul-medianoche: #1a1044;
---verde-oscuro: #151c18;
-}
-body {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-background: linear-gradient(135deg, var(--azul-medianoche) 0%, var(--verde-oscuro) 50%, var(--azul-purpura) 100%);
-color: white;
-overflow-x: hidden;
-min-height: 100vh;
-line-height: 1.6;
-}
-body::before {
-content: '';
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 2px);
-pointer-events: none;
-z-index: 1000;
-}
-.skip-link {
-position: absolute;
-top: -40px;
-left: 0;
-background: var(--rosa-fuerte);
-color: white;
-padding: 8px;
-text-decoration: none;
-z-index: 100;
-}
-.skip-link:focus {
-top: 0;
-}
-nav {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 15px 50px;
-background: rgba(26, 16, 68, 0.95);
-backdrop-filter: blur(10px);
-border-bottom: 2px solid var(--violeta-claro);
-position: sticky;
-top: 0;
-z-index: 100;
-}
-.logo {
-width: 60px;
-height: 60px;
-filter: drop-shadow(0 0 8px var(--violeta-claro));
-}
-.logo-text {
-font-size: 1.5em;
-font-weight: bold;
-background: linear-gradient(45deg, var(--rosa-salmon), var(--violeta-claro));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin-left: 10px;
-}
-.nav-brand {
-display: flex;
-align-items: center;
-gap: 10px;
-}
-.nav-links {
-display: flex;
-gap: 25px;
-list-style: none;
-align-items: center;
-}
-.nav-links a {
-color: white;
-text-decoration: none;
-font-weight: 500;
-padding: 8px 12px;
-border-radius: 5px;
-transition: all 0.3s ease;
-position: relative;
-}
-.nav-links a:hover, .nav-links a:focus {
-background: rgba(187, 58, 211, 0.2);
-color: var(--violeta-claro);
-outline: 2px solid var(--violeta-claro);
-outline-offset: 2px;
-}
-.nav-links a.active {
-background: rgba(187, 58, 211, 0.3);
-border-bottom: 3px solid var(--rosa-salmon);
-}
-.cta-nav {
-background: linear-gradient(45deg, var(--rosa-fuerte), var(--violeta-claro));
-padding: 10px 20px;
-border-radius: 25px;
-color: white;
-text-decoration: none;
-font-weight: bold;
-transition: all 0.3s ease;
-border: 2px solid transparent;
-}
-.cta-nav:hover, .cta-nav:focus {
-transform: scale(1.05);
-box-shadow: 0 0 20px var(--violeta-claro);
-border: 2px solid white;
-outline: none;
-}
-.hero {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 60px 50px;
-min-height: calc(100vh - 100px);
-gap: 40px;
-}
-.hero-content {
-flex: 1;
-max-width: 600px;
-z-index: 10;
-}
-.hero-title {
-font-size: 2.8em;
-font-weight: bold;
-background: linear-gradient(45deg, var(--rosa-salmon), var(--violeta-claro), var(--azul-violeta));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin-bottom: 25px;
-line-height: 1.2;
-}
-.hero-text {
-font-size: 1.2em;
-line-height: 1.8;
-color: #e0e0e0;
-margin-bottom: 35px;
-}
-.highlight {
-color: var(--violeta-claro);
-font-weight: 600;
-}
-.cta-btn {
-display: inline-block;
-padding: 16px 40px;
-font-size: 1.1em;
-font-weight: bold;
-background: linear-gradient(45deg, var(--rosa-fuerte), var(--magenta-oscuro));
-color: white;
-border: 2px solid var(--violeta-claro);
-border-radius: 8px;
-cursor: pointer;
-transition: all 0.3s ease;
-text-decoration: none;
-box-shadow: 0 4px 15px rgba(243, 102, 136, 0.4);
-}
-.cta-btn:hover, .cta-btn:focus {
-transform: translateY(-2px);
-box-shadow: 0 6px 25px rgba(187, 58, 211, 0.6);
-outline: 3px solid white;
-outline-offset: 3px;
-}
-.hero-visual {
-flex: 1;
-display: flex;
-justify-content: center;
-align-items: center;
-position: relative;
-}
-.brain-lightbulb {
-width: 350px;
-height: 350px;
-position: relative;
-animation: float 4s ease-in-out infinite;
-}
-@keyframes float {
-0%, 100% { transform: translateY(0px); }
-50% { transform: translateY(-15px); }
-}
-.bulb-container {
-width: 100%;
-height: 100%;
-background: radial-gradient(circle, rgba(243, 102, 136, 0.15), transparent);
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-position: relative;
-}
-.bulb-glow {
-width: 220px;
-height: 220px;
-background: radial-gradient(circle, var(--rosa-salmon) 0%, var(--violeta-claro) 50%, transparent 70%);
-border-radius: 50%;
-animation: pulse 3s ease-in-out infinite;
-filter: blur(15px);
-position: absolute;
-}
-@keyframes pulse {
-0%, 100% { opacity: 0.5; transform: scale(1); }
-50% { opacity: 0.8; transform: scale(1.08); }
-}
-.bulb-shape {
-width: 180px;
-height: 250px;
-background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.15) 100%);
-border-radius: 90px 90px 45px 45px;
-position: relative;
-z-index: 1;
-border: 3px solid var(--violeta-claro);
-}
-.brain {
-width: 130px;
-height: 130px;
-position: absolute;
-top: 25px;
-left: 50%;
-transform: translateX(-50%);
-background: radial-gradient(circle, var(--rosa-fuerte), var(--magenta-oscuro));
-border-radius: 50%;
-}
-
-/* NUEVAS SECCIONES */
-.section {
-padding: 80px 50px;
-min-height: 100vh;
-display: none;
-}
-.section.active {
-display: block;
-}
-.section-title {
-font-size: 2.5em;
-text-align: center;
-background: linear-gradient(45deg, var(--rosa-salmon), var(--violeta-claro));
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin-bottom: 50px;
-}
-.section-content {
-max-width: 1200px;
-margin: 0 auto;
-}
-
-/* Purpose Section */
-.purpose-box {
-background: rgba(26, 16, 68, 0.8);
-padding: 40px;
-border-radius: 15px;
-border: 2px solid var(--violeta-claro);
-text-align: center;
-margin-bottom: 30px;
-}
-.purpose-text {
-font-size: 1.2em;
-line-height: 1.8;
-color: #e0e0e0;
-}
-
-/* About Section */
-.team-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-gap: 30px;
-margin-top: 40px;
-}
-.team-member {
-background: rgba(26, 16, 68, 0.8);
-padding: 30px;
-border-radius: 15px;
-border: 2px solid var(--azul-violeta);
-text-align: center;
-transition: all 0.3s ease;
-}
-.team-member:hover {
-border-color: var(--violeta-claro);
-transform: translateY(-5px);
-box-shadow: 0 10px 30px rgba(187, 58, 211, 0.3);
-}
-.team-member h3 {
-color: var(--rosa-salmon);
-margin-bottom: 10px;
-}
-
-/* Careers Section */
-.careers-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-gap: 25px;
-}
-.career-card {
-background: rgba(26, 16, 68, 0.8);
-padding: 30px;
-border-radius: 12px;
-border: 2px solid var(--azul-violeta);
-transition: all 0.3s ease;
-cursor: pointer;
-}
-.career-card:hover {
-border-color: var(--rosa-salmon);
-transform: scale(1.03);
-box-shadow: 0 8px 25px rgba(243, 102, 136, 0.3);
-}
-.career-card h3 {
-color: var(--violeta-claro);
-margin-bottom: 15px;
-font-size: 1.5em;
-}
-.career-submenu {
-margin-top: 20px;
-padding-top: 20px;
-border-top: 1px solid var(--azul-violeta);
-}
-.career-submenu a {
-display: block;
-color: var(--rosa-salmon);
-text-decoration: none;
-padding: 10px;
-margin: 5px 0;
-border-radius: 5px;
-transition: all 0.3s ease;
-}
-.career-submenu a:hover {
-background: rgba(187, 58, 211, 0.2);
-padding-left: 20px;
-}
-
-/* FAQ Section */
-.faq-container {
-max-width: 800px;
-margin: 0 auto;
-}
-.faq-item {
-background: rgba(26, 16, 68, 0.8);
-margin-bottom: 20px;
-border-radius: 10px;
-border: 2px solid var(--azul-violeta);
-overflow: hidden;
-}
-.faq-question {
-padding: 20px;
-cursor: pointer;
-display: flex;
-justify-content: space-between;
-align-items: center;
-transition: all 0.3s ease;
-}
-.faq-question:hover {
-background: rgba(104, 77, 218, 0.2);
-}
-.faq-question h3 {
-color: var(--violeta-claro);
-font-size: 1.2em;
-}
-.faq-answer {
-padding: 0 20px;
-max-height: 0;
-overflow: hidden;
-transition: all 0.3s ease;
-}
-.faq-item.active .faq-answer {
-padding: 20px;
-max-height: 500px;
-}
-.faq-toggle {
-font-size: 1.5em;
-color: var(--rosa-salmon);
-transition: transform 0.3s ease;
-}
-.faq-item.active .faq-toggle {
-transform: rotate(45deg);
-}
-
-/* Contact Section */
-.contact-form {
-max-width: 600px;
-margin: 0 auto;
-background: rgba(26, 16, 68, 0.8);
-padding: 40px;
-border-radius: 15px;
-border: 2px solid var(--violeta-claro);
-}
-.form-group {
-margin-bottom: 25px;
-}
-.form-group label {
-display: block;
-color: white;
-margin-bottom: 8px;
-font-weight: 600;
-}
-.form-group input, .form-group textarea {
-width: 100%;
-padding: 14px;
-background: rgba(104, 77, 218, 0.15);
-border: 2px solid var(--azul-violeta);
-border-radius: 8px;
-color: white;
-font-size: 1em;
-transition: all 0.3s ease;
-font-family: inherit;
-}
-.form-group textarea {
-min-height: 150px;
-resize: vertical;
-}
-.form-group input:focus, .form-group textarea:focus {
-outline: none;
-border-color: var(--violeta-claro);
-box-shadow: 0 0 0 3px rgba(187, 58, 211, 0.3);
-background: rgba(104, 77, 218, 0.25);
-}
-.submit-btn {
-width: 100%;
-padding: 16px;
-font-size: 1.1em;
-font-weight: bold;
-background: linear-gradient(45deg, var(--rosa-fuerte), var(--violeta-claro));
-color: white;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-transition: all 0.3s ease;
-}
-.submit-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 25px rgba(187, 58, 211, 0.6);
-}
-
-/* Footer */
-footer {
-background: rgba(26, 16, 68, 0.95);
-padding: 40px 50px;
-border-top: 2px solid var(--violeta-claro);
-text-align: center;
-}
-.footer-content {
-max-width: 1200px;
-margin: 0 auto;
-}
-.footer-links {
-display: flex;
-justify-content: center;
-gap: 30px;
-margin-bottom: 20px;
-flex-wrap: wrap;
-}
-.footer-links a {
-color: var(--rosa-salmon);
-text-decoration: none;
-transition: all 0.3s ease;
-}
-.footer-links a:hover {
-color: var(--violeta-claro);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-nav {
-padding: 15px 20px;
-flex-wrap: wrap;
-}
-.nav-links {
-flex-direction: column;
-width: 100%;
-gap: 10px;
-}
-.hero {
-flex-direction: column;
-text-align: center;
-padding: 40px 20px;
-}
-.hero-title {
-font-size: 2em;
-}
-.brain-lightbulb {
-width: 250px;
-height: 250px;
-}
-.section {
-padding: 40px 20px;
-}
-.team-grid, .careers-grid {
-grid-template-columns: 1fr;
-}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="particles">
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+<div class="particle"></div>
+</div>
+
 <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
 <nav>
 <div class="nav-brand">
 <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" style="stop-color:#f36688;stop-opacity:1" />
-<stop offset="50%" style="stop-color:#bb3ad3;stop-opacity:1" />
-<stop offset="100%" style="stop-color:#684dda;stop-opacity:1" />
+<stop offset="0%" style="stop-color:#E4A943;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#89491E;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#5C381F;stop-opacity:1" />
 </linearGradient>
 </defs>
 <circle cx="100" cy="100" r="95" fill="none" stroke="url(#logoGradient)" stroke-width="3"/>
@@ -520,253 +36,330 @@ grid-template-columns: 1fr;
 <span class="logo-text">LeapU</span>
 </div>
 <ul class="nav-links">
-<li><a href="#home" onclick="navigateTo('home', event)">Inicio</a></li>
-<li><a href="#purpose" onclick="navigateTo('purpose', event)">Propósito</a></li>
-<li><a href="#about" onclick="navigateTo('about', event)">Nosotros</a></li>
-<li><a href="#careers" onclick="navigateTo('careers', event)">Carreras</a></li>
-<li><a href="#faq" onclick="navigateTo('faq', event)">FAQ</a></li>
-<li><a href="#contact" onclick="navigateTo('contact', event)">Contacto</a></li>
+<li><a href="#home" class="active">Inicio</a></li>
+<li><a href="#purpose">Propósito</a></li>
+<li><a href="#about">Nosotros</a></li>
+<li><a href="#careers">Carreras</a></li>
+<li><a href="#contact">Contacto</a></li>
 </ul>
 <div style="display: flex; gap: 12px;">
-<a href="#registro" class="cta-nav" onclick="navigateTo('registro', event)">Registrarse</a>
+<a href="#register" class="cta-nav"><span>Registrarse</span></a>
 </div>
 </nav>
 
 <main id="main">
-<section class="hero active" id="home">
+<!-- Hero Section -->
+<section class="hero" id="home">
 <div class="hero-content">
 <h1 class="hero-title">Aprende Nuevas Habilidades, Crece con el Conocimiento</h1>
 <p class="hero-text">
 Transforma tu carrera para alcanzar el futuro que mereces.
 Accede a <span class="highlight">recursos académicos</span>,
 <span class="highlight">guías personalizadas</span> y oportunidades
-de vinculación profesional en una sola plataforma.
+de vinculación profesional en una sola plataforma impulsada por IA.
 </p>
-<a href="#registro" class="cta-btn" onclick="navigateTo('registro', event)">Comenzar Ahora</a>
+<a href="#register" class="cta-btn">Comenzar Ahora</a>
 </div>
 <div class="hero-visual">
 <div class="brain-lightbulb">
 <div class="bulb-container">
 <div class="bulb-glow"></div>
 <div class="bulb-shape">
-<div class="brain"></div>
+<div class="brain">
+<div class="typing-indicator">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 </section>
 
-<section class="section" id="purpose">
-<h2 class="section-title">Nuestro Propósito</h2>
-<div class="section-content">
-<div class="purpose-box">
-<p class="purpose-text">
-En <strong>LeapU</strong>, creemos que la educación es la llave que abre las puertas del futuro. 
-Nuestra misión es democratizar el acceso al conocimiento y crear un puente entre 
-estudiantes y oportunidades profesionales.
+<!-- Advertise Slider -->
+<section class="advertise-slider">
+<div class="slider-container">
+<h2 class="slider-title">Explora Nuestras Características</h2>
+<div class="slider-wrapper">
+<div class="slider-track">
+<div class="slide-card">
+<div class="slide-icon">🎓</div>
+<h3>Cursos Premium</h3>
+<p>Accede a miles de cursos de alta calidad en tecnología, negocios, diseño y más.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">🤖</div>
+<h3>Asistente IA</h3>
+<p>Tu mentor virtual disponible 24/7 para resolver dudas y guiarte en tu aprendizaje.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">💼</div>
+<h3>Oportunidades</h3>
+<p>Conecta con empresas líderes y encuentra tu siguiente gran oportunidad profesional.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">📊</div>
+<h3>Seguimiento</h3>
+<p>Monitorea tu progreso con análisis detallados y recomendaciones personalizadas.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">🎓</div>
+<h3>Cursos Premium</h3>
+<p>Accede a miles de cursos de alta calidad en tecnología, negocios, diseño y más.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">🤖</div>
+<h3>Asistente IA</h3>
+<p>Tu mentor virtual disponible 24/7 para resolver dudas y guiarte en tu aprendizaje.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">💼</div>
+<h3>Oportunidades</h3>
+<p>Conecta con empresas líderes y encuentra tu siguiente gran oportunidad profesional.</p>
+</div>
+<div class="slide-card">
+<div class="slide-icon">📊</div>
+<h3>Seguimiento</h3>
+<p>Monitorea tu progreso con análisis detallados y recomendaciones personalizadas.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Purpose Section -->
+<section class="purpose-section" id="purpose">
+<div class="purpose-container">
+<h2 class="purpose-title">Nuestro Propósito</h2>
+<div class="purpose-grid">
+<div class="purpose-card">
+<div class="purpose-card-content">
+<div class="purpose-icon">🎯</div>
+<h3>Misión</h3>
+<p>Democratizar el acceso a la educación de calidad y crear puentes entre el talento y las oportunidades del mundo digital.</p>
+</div>
+</div>
+<div class="purpose-card">
+<div class="purpose-card-content">
+<div class="purpose-icon">🚀</div>
+<h3>Visión</h3>
+<p>Ser la plataforma líder en transformación educativa, empoderando a millones de estudiantes a alcanzar su máximo potencial.</p>
+</div>
+</div>
+<div class="purpose-card">
+<div class="purpose-card-content">
+<div class="purpose-icon">💎</div>
+<h3>Valores</h3>
+<p>Innovación, inclusión, excelencia y compromiso con el desarrollo integral de cada persona que confía en nosotros.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Who We Are -->
+<section class="who-section" id="about">
+<div class="who-container">
+<h2 class="who-title">¿Quiénes Somos?</h2>
+<div class="who-content">
+<p class="who-text">
+Somos una organización dedicada a revolucionar la educación a través de la tecnología. 
+Combinamos inteligencia artificial, contenido de calidad y una red global de profesionales 
+para crear experiencias de aprendizaje que transforman vidas.
 </p>
-</div>
-<div class="purpose-box">
-<h3 style="color: var(--violeta-claro); margin-bottom: 20px;">¿Qué Hacemos?</h3>
-<p class="purpose-text">
-Conectamos a estudiantes con recursos educativos de calidad, guías de carrera personalizadas,
-y oportunidades de prácticas e entrevistas. Somos tu compañero en el viaje hacia el éxito profesional.
+<p class="who-text">
+Nuestro equipo está formado por educadores apasionados, tecnólogos innovadores y 
+expertos de la industria comprometidos con tu éxito profesional.
 </p>
+<div class="who-stats">
+<div class="stat-item">
+<span class="stat-number">50K+</span>
+<span class="stat-label">Estudiantes Activos</span>
 </div>
+<div class="stat-item">
+<span class="stat-number">500+</span>
+<span class="stat-label">Cursos Disponibles</span>
 </div>
-</section>
-
-<section class="section" id="about">
-<h2 class="section-title">Nuestro Equipo</h2>
-<div class="section-content">
-<div class="team-grid">
-<div class="team-member">
-<h3>👨‍💻 Desarrolladores</h3>
-<p>Equipo apasionado por la tecnología y la educación, trabajando para crear la mejor plataforma educativa.</p>
+<div class="stat-item">
+<span class="stat-number">1000+</span>
+<span class="stat-label">Empresas Aliadas</span>
 </div>
-<div class="team-member">
-<h3>🎨 Diseñadores</h3>
-<p>Creando experiencias visuales intuitivas y atractivas que facilitan el aprendizaje.</p>
-</div>
-<div class="team-member">
-<h3>📚 Educadores</h3>
-<p>Expertos en pedagogía que curan y organizan el mejor contenido educativo.</p>
-</div>
-<div class="team-member">
-<h3>🤝 Mentores</h3>
-<p>Profesionales experimentados guiando a la próxima generación de talento.</p>
 </div>
 </div>
 </div>
 </section>
 
-<section class="section" id="careers">
-<h2 class="section-title">Explora Carreras</h2>
-<div class="section-content">
+<!-- Careers Promo -->
+<section class="careers-promo" id="careers">
+<div class="careers-container">
+<h2 class="careers-title">Explora Tu Futuro</h2>
 <div class="careers-grid">
 <div class="career-card">
-<h3>🎓 Carreras Universitarias</h3>
-<p>Descubre programas académicos alineados con tus intereses y el mercado laboral.</p>
-<div class="career-submenu">
-<a href="#" onclick="alert('Próximamente: Guías de Carreras'); return false;">Ver Guías de Carreras</a>
-<a href="#" onclick="alert('Próximamente: Programas Disponibles'); return false;">Programas Disponibles</a>
+<div class="career-card-content">
+<div class="career-icon">🎓</div>
+<h3>Carreras Universitarias</h3>
+<p>Descubre programas académicos alineados con las demandas del mercado laboral del futuro.</p>
+<a href="#" class="career-link">Explorar Carreras</a>
 </div>
 </div>
 <div class="career-card">
-<h3>💼 Entrevistas</h3>
-<p>Prepárate para entrevistas laborales con recursos y simulaciones.</p>
-<div class="career-submenu">
-<a href="#" onclick="alert('Próximamente: Tips de Entrevista'); return false;">Tips de Entrevista</a>
-<a href="#" onclick="alert('Próximamente: Preguntas Frecuentes'); return false;">Preguntas Frecuentes</a>
+<div class="career-card-content">
+<div class="career-icon">💼</div>
+<h3>Preparación de Entrevistas</h3>
+<p>Entrena con simulaciones realistas y recibe feedback instantáneo de nuestra IA.</p>
+<a href="#" class="career-link">Comenzar Práctica</a>
 </div>
 </div>
 <div class="career-card">
-<h3>🏢 Prácticas Profesionales</h3>
-<p>Encuentra oportunidades de prácticas en empresas líderes.</p>
-<div class="career-submenu">
-<a href="#" onclick="alert('Próximamente: Ofertas de Prácticas'); return false;">Ofertas Disponibles</a>
-<a href="#" onclick="alert('Próximamente: Cómo Aplicar'); return false;">Cómo Aplicar</a>
+<div class="career-card-content">
+<div class="career-icon">🏢</div>
+<h3>Prácticas Profesionales</h3>
+<p>Conecta con oportunidades en empresas líderes y da el siguiente paso en tu carrera.</p>
+<a href="#" class="career-link">Ver Oportunidades</a>
 </div>
 </div>
 </div>
 </div>
 </section>
 
-<section class="section" id="faq">
-<h2 class="section-title">Preguntas Frecuentes</h2>
-<div class="section-content">
-<div class="faq-container">
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>¿Qué es LeapU?</h3>
-<span class="faq-toggle">+</span>
-</div>
-<div class="faq-answer">
-<p>LeapU es una plataforma educativa que conecta estudiantes con recursos académicos, guías de carrera y oportunidades profesionales.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>¿Es gratis registrarse?</h3>
-<span class="faq-toggle">+</span>
-</div>
-<div class="faq-answer">
-<p>Sí, el registro en LeapU es completamente gratuito. Ofrecemos acceso básico sin costo y planes premium opcionales.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>¿Qué tipo de recursos ofrece la plataforma?</h3>
-<span class="faq-toggle">+</span>
-</div>
-<div class="faq-answer">
-<p>Ofrecemos guías de estudio, materiales de curso, orientación profesional, conexiones con empresas para prácticas, y preparación para entrevistas.</p>
-</div>
-</div>
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFAQ(this)">
-<h3>¿Cómo puedo contactar con el equipo?</h3>
-<span class="faq-toggle">+</span>
-</div>
-<div class="faq-answer">
-<p>Puedes contactarnos a través del formulario en la sección de Contacto o enviarnos un email a contacto@leapu.com</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<section class="section" id="contact">
-<h2 class="section-title">Contacto</h2>
-<div class="section-content">
-<div class="contact-form">
-<form id="contactForm">
-<div class="form-group">
-<label for="contact-name">Nombre Completo</label>
-<input type="text" id="contact-name" placeholder="Tu nombre" required>
-</div>
-<div class="form-group">
-<label for="contact-email">Correo Electrónico</label>
-<input type="email" id="contact-email" placeholder="tu@correo.com" required>
-</div>
-<div class="form-group">
-<label for="contact-subject">Asunto</label>
-<input type="text" id="contact-subject" placeholder="¿En qué podemos ayudarte?" required>
-</div>
-<div class="form-group">
-<label for="contact-message">Mensaje</label>
-<textarea id="contact-message" placeholder="Escribe tu mensaje aquí..." required></textarea>
-</div>
-<button type="submit" class="submit-btn">Enviar Mensaje</button>
-</form>
-</div>
-</div>
-</section>
-
-<section class="section" id="registro">
-<div class="form-container" style="max-width: 480px; margin: 0 auto;">
-<h2 class="section-title">Crear Cuenta</h2>
-<form id="registerForm">
-<div class="form-group">
-<label for="reg-username">Nombre de Usuario</label>
-<input type="text" id="reg-username" placeholder="Elige tu nombre de usuario" required>
-</div>
-<div class="form-group">
-<label for="reg-email">Correo Electrónico</label>
-<input type="email" id="reg-email" placeholder="tu@correo.com" required>
-</div>
-<div class="form-group">
-<label for="reg-password">Contraseña</label>
-<input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required>
-</div>
-<div class="form-group">
-<label for="reg-password-confirm">Confirmar Contraseña</label>
-<input type="password" id="reg-password-confirm" placeholder="Repite tu contraseña" required>
-</div>
-<button type="submit" class="submit-btn">Crear Cuenta</button>
-</form>
+<!-- Register Banner -->
+<section class="register-banner" id="register">
+<div class="register-container">
+<h2 class="register-title">¿Listo Para Transformar Tu Futuro?</h2>
+<p class="register-text">
+Únete a miles de estudiantes que ya están construyendo el futuro que merecen. 
+Regístrate hoy y comienza tu viaje hacia el éxito profesional.
+</p>
+<a href="#" class="register-cta" onclick="showRegisterForm(event)"><span>Registrarse Gratis</span></a>
 </div>
 </section>
 </main>
 
-<footer>
+<!-- Footer -->
+<footer id="contact">
 <div class="footer-content">
-<div class="footer-links">
-<a href="#home" onclick="navigateTo('home', event)">Inicio</a>
-<a href="#about" onclick="navigateTo('about', event)">Nosotros</a>
-<a href="#careers" onclick="navigateTo('careers', event)">Carreras</a>
-<a href="#contact" onclick="navigateTo('contact', event)">Contacto</a>
+<div class="footer-grid">
+<div class="footer-section">
+<h4>LeapU</h4>
+<p style="color: var(--beige-grisaceo); line-height: 1.8;">
+Transformando vidas a través de la educación y la tecnología. Tu futuro comienza aquí.
+</p>
+<div class="footer-social">
+<div class="social-icon">📘</div>
+<div class="social-icon">🐦</div>
+<div class="social-icon">💼</div>
+<div class="social-icon">📸</div>
 </div>
-<p style="color: #e0e0e0;">© 2024 LeapU. Todos los derechos reservados.</p>
-<p style="color: var(--rosa-salmon); margin-top: 10px;">Transformando futuros, un estudiante a la vez.</p>
+</div>
+<div class="footer-section">
+<h4>Enlaces Rápidos</h4>
+<div class="footer-links">
+<a href="#home">Inicio</a>
+<a href="#purpose">Propósito</a>
+<a href="#about">Nosotros</a>
+<a href="#careers">Carreras</a>
+</div>
+</div>
+<div class="footer-section">
+<h4>Recursos</h4>
+<div class="footer-links">
+<a href="#">Blog</a>
+<a href="#">Documentación</a>
+<a href="#">Ayuda</a>
+<a href="#">FAQ</a>
+</div>
+</div>
+<div class="footer-section">
+<h4>Contacto</h4>
+<div class="footer-links">
+<a href="mailto:contacto@leapu.com">contacto@leapu.com</a>
+<a href="tel:+1234567890">+1 (234) 567-890</a>
+<a href="#">Soporte 24/7</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 LeapU. Todos los derechos reservados.</p>
+<p class="footer-tagline">Transformando futuros, un estudiante a la vez ✨</p>
+</div>
 </div>
 </footer>
 
 <script>
-function navigateTo(section, e) {
-if (e) e.preventDefault();
-document.querySelectorAll('.section, .hero').forEach(s => s.classList.remove('active'));
-const target = document.getElementById(section);
-if (target) {
-target.classList.add('active');
-target.scrollIntoView({ behavior: 'smooth' });
-}
-}
-
-function toggleFAQ(element) {
-const faqItem = element.parentElement;
-faqItem.classList.toggle('active');
-}
-
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+// Smooth scroll for navigation
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
 e.preventDefault();
-alert('¡Registro exitoso! (Conectar con BD)');
+const target = document.querySelector(this.getAttribute('href'));
+if (target) {
+target.scrollIntoView({
+behavior: 'smooth',
+block: 'start'
+});
+}
+});
 });
 
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Navbar active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop;
+const sectionHeight = section.clientHeight;
+if (scrollY >= sectionTop - 200) {
+current = section.getAttribute('id');
+}
+});
+
+navLinks.forEach(link => {
+link.classList.remove('active');
+if (link.getAttribute('href') === `#${current}`) {
+link.classList.add('active');
+}
+});
+});
+
+// Register form modal
+function showRegisterForm(e) {
 e.preventDefault();
-alert('¡Mensaje enviado! (Conectar con BD)');
-this.reset();
+alert('🚀 Formulario de registro próximamente!\n\nPronto podrás crear tu cuenta y comenzar tu viaje de aprendizaje.');
+}
+
+// Add parallax effect to hero
+document.addEventListener('mousemove', (e) => {
+const hero = document.querySelector('.hero-visual');
+if (hero) {
+const x = (e.clientX / window.innerWidth - 0.5) * 20;
+const y = (e.clientY / window.innerHeight - 0.5) * 20;
+hero.style.transform = `translate(${x}px, ${y}px)`;
+}
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
+}, observerOptions);
+
+document.querySelectorAll('.purpose-card, .career-card, .slide-card').forEach(el => {
+el.style.opacity = '0';
+el.style.transform = 'translateY(30px)';
+el.style.transition = 'all 0.6s ease';
+observer.observe(el);
 });
 </script>
 </body>
